@@ -10,5 +10,5 @@ In addition to this, different suppliers have different names of color tones.
 
 ***
 
-**TonalCreamAssistant** - the system which helps people to choose the right color
-tone for them using photos.
+**TonalCreamAssistant** - the system which helps people to choose the right
+color tone for them using photos.
