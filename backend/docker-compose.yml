@@ -14,14 +14,13 @@ services:
     volumes:
       - db_volume:/var/lib/comparing/data
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready" ]
+      test: ["CMD-SHELL", "pg_isready"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-
 volumes:
-  db_volume: { }
+  db_volume: {}
 
 networks:
-  main: { }
+  main: {}
