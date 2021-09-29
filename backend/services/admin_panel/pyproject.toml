@@ -17,7 +17,12 @@ django-health-check = "^3.16.4"
 
 [tool.poetry.dev-dependencies]
 toml = "^0.10.2"
+yapf = "^0.31.0"
+whitespace = "^1.0.0-beta.8"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.yapf]
+based_on_style = "pep8"
