@@ -28,9 +28,16 @@ class ProductType(models.TextChoices):
 class Product(models.Model):
     id = models.TextField(_("id"), primary_key=True, default=uuid.uuid4)
     name = models.TextField(_("name"), null=False, blank=False)
-    type = models.TextField(_("type"), choices=ProductType.choices, null=False, blank=False)
+    type = models.TextField(
+        _("type"), choices=ProductType.choices, null=False, blank=False
+    )
     color = ColorField(_("color"), null=False, blank=False)
-    vendor = models.ForeignKey(verbose_name=_("vendor"), to="Vendor", on_delete=models.CASCADE, related_name='products')
+    vendor = models.ForeignKey(
+        verbose_name=_("vendor"),
+        to="Vendor",
+        on_delete=models.CASCADE,
+        related_name="products",
+    )
 
     class Meta:
         managed = False
