@@ -9,37 +9,62 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Product',
+            name="Product",
             fields=[
-                ('id', models.TextField(default=uuid.uuid4, primary_key=True, serialize=False, verbose_name='id')),
-                ('name', models.TextField(verbose_name='name')),
-                ('type', models.TextField(choices=[('TONAL_CREAM', 'TONAL_CREAM')], verbose_name='type')),
-                ('color', colorfield.fields.ColorField(default='#FFFFFF', max_length=18, verbose_name='color')),
+                (
+                    "id",
+                    models.TextField(
+                        default=uuid.uuid4,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="id",
+                    ),
+                ),
+                ("name", models.TextField(verbose_name="name")),
+                (
+                    "type",
+                    models.TextField(
+                        choices=[("TONAL_CREAM", "TONAL_CREAM")], verbose_name="type"
+                    ),
+                ),
+                (
+                    "color",
+                    colorfield.fields.ColorField(
+                        default="#FFFFFF", max_length=18, verbose_name="color"
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'product',
-                'verbose_name_plural': 'products',
-                'db_table': '"vendor"."product"',
-                'managed': False,
+                "verbose_name": "product",
+                "verbose_name_plural": "products",
+                "db_table": '"vendor"."product"',
+                "managed": False,
             },
         ),
         migrations.CreateModel(
-            name='Vendor',
+            name="Vendor",
             fields=[
-                ('id', models.TextField(default=uuid.uuid4, primary_key=True, serialize=False, verbose_name='id')),
-                ('name', models.TextField(verbose_name='name')),
-                ('url', models.URLField(null=True, verbose_name='url')),
+                (
+                    "id",
+                    models.TextField(
+                        default=uuid.uuid4,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="id",
+                    ),
+                ),
+                ("name", models.TextField(verbose_name="name")),
+                ("url", models.URLField(null=True, verbose_name="url")),
             ],
             options={
-                'verbose_name': 'vendor',
-                'verbose_name_plural': 'vendors',
-                'db_table': '"vendor"."vendor"',
-                'managed': False,
+                "verbose_name": "vendor",
+                "verbose_name_plural": "vendors",
+                "db_table": '"vendor"."vendor"',
+                "managed": False,
             },
         ),
     ]
