@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  vendor_db:
+    image: "postgres:13"
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - main
+    ports:
+      - "${DB_PORTS}:5432"
+    restart: on-failure
+    volumes:
+      - db_volume:/var/lib/comparing/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+volumes:
+  db_volume: { }
+
+networks:
+  main: { }
