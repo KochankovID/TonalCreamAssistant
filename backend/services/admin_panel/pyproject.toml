@@ -18,7 +18,7 @@ django-health-check = "^3.16.4"
 [tool.poetry.dev-dependencies]
 toml = "^0.10.2"
 yapf = "^0.31.0"
-whitespace = "^1.0.0-beta.8"
+isort = "^5.9.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

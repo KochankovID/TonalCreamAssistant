@@ -1,9 +1,8 @@
 import uuid
 
+from colorfield.fields import ColorField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
-from colorfield.fields import ColorField
 
 
 class Vendor(models.Model):
