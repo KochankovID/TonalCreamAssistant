@@ -16,8 +16,13 @@ gunicorn = "^20.1.0"
 django-health-check = "^3.16.4"
 
 [tool.poetry.dev-dependencies]
-black = "^21.9b0"
+toml = "^0.10.2"
+yapf = "^0.31.0"
+isort = "^5.9.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.yapf]
+based_on_style = "pep8"
