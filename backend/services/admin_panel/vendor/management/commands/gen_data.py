@@ -1,7 +1,8 @@
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from vendor.factories import VendorFactory, ProductFactory
-from vendor.models import Vendor, Product
+
+from vendor.factories import ProductFactory, VendorFactory
+from vendor.models import Product, Vendor
 
 NUM_VENDOR = 10
 NUM_PRODUCT = 100
