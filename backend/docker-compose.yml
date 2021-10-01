@@ -77,7 +77,7 @@ services:
       - "${VENDOR_PORT}:8000"
     restart: on-failure
     healthcheck:
-      test: [ "CMD-SHELL", "bash scripts/fastApi_health_check.sh" ]
+      test: ["CMD-SHELL", "bash scripts/fastApi_health_check.sh"]
       interval: 30s
       timeout: 30s
       retries: 5
