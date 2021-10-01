@@ -27,8 +27,8 @@ Install Docker and Docker compose
 3. Run `docker compose up` in the backend repository folder
 4. To create superuser for admin_panel run in the admin_panel folder
    `python manage.py createsuperuser`
-5. To create mock data in the vendor_db run in the admin_panel
-   folder `python manage.py gen_data`
+5. To create mock data in the vendor_db run in the admin_panel folder
+   `python manage.py gen_data`
 
 # Service architecture
 
