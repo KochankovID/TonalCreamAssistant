@@ -1,4 +1,4 @@
-# frontend
+# TonalCreamAssistant
 
 A new Flutter project.
 
