@@ -18,4 +18,4 @@ samples, guidance on mobile development, and a full API reference.
 ---
 
 # User flow diagramm
-[user flow](./docs/user_flow.png)
+![user flow](./docs/user_flow.png)
