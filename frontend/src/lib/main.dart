@@ -222,4 +222,3 @@ class ImagePageState extends State<ImagePage> {
     );
   }
 }
-
