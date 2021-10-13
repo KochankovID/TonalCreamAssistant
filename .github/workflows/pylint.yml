@@ -50,4 +50,6 @@ jobs:
 
       - name: Analysing the admin_panel service code with pylint
         run: |
+          cd backend/services/admin_panel
+          source .venv/bin/activate
           pylint_runner
