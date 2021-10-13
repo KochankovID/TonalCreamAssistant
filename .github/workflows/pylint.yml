@@ -2,8 +2,11 @@ name: Pylint
 
 on:
   pull_request:
+    branches:
+      - main
   push:
-
+    branches:
+      - main
 jobs:
   build:
 
@@ -20,6 +23,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint
         pip install pylint-django
+        pip install django
         pip install pylint-runner
     - name: Analysing the admin_panel service code with pylint
       run: |
