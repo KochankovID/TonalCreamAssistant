@@ -30,9 +30,6 @@ jobs:
           virtualenvs-create: true
           virtualenvs-in-project: true
           installer-parallel: true
-      - name: Go admin_panel dir
-        run: |
-          cd backend/services/admin_panel
       #----------------------------------------------
       #       load cached venv if cache exists
       #----------------------------------------------
@@ -47,7 +44,9 @@ jobs:
       #----------------------------------------------
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: poetry install --no-interaction --no-root
+        run: |
+          cd backend/services/admin_panel
+          poetry install --no-interaction --no-root
 
       - name: Analysing the admin_panel service code with pylint
         run: |
