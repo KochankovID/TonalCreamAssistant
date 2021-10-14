@@ -35,6 +35,11 @@ based_on_style = "pep8"
 [tool.pylint.'MASTER']
 load-plugins = ["pylint_django.checkers.migrations", "pylint_django"]
 django-settings-module = "admin_panel.settings"
+ignore = [
+    ".vevn",
+    "scripts",
+    "static"
+]
 
 [tool.pylint.messages_control]
 max-line-length = 120
