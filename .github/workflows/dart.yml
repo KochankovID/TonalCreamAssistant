@@ -26,7 +26,7 @@ jobs:
       - name: Verify Formatting
         run: |
           cd frontend/src
-          dart format --output=none --set-exit-if-changed .
+          dart format --set-exit-if-changed .
 
       - name: Analyze Project Source
         run: |
