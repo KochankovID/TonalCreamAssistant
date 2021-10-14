@@ -8,8 +8,9 @@ on:
     branches:
       - main
 jobs:
-  setup:
+  pylint:
     runs-on: ubuntu-latest
+
     steps:
       #----------------------------------------------
       #       check-out repo and set-up python
@@ -32,28 +33,42 @@ jobs:
       # install dependencies if cache does not exist
       #----------------------------------------------
       - name: Install dependencies
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: |
           cd backend/services/admin_panel
           poetry install --no-interaction --no-root
+          cd backend/services/vendor
+          poetry install --no-interaction --no-root
 
-  pylint:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
       - name: Analysing the admin_panel service code with pylint
         run: |
           cd backend/services/admin_panel
           source .venv/bin/activate
-          mkdir -p pylint_report
-          pylint * > ./pylint_report/pylint_checks.json || exit_code=`echo $?` || true
-          pylint-json2html -o ./pylint_report/pylint_checks.html ./pylint_report/pylint_checks.json
+          mkdir -p reoprts
+          pylint * > ./reoprts/pylint_checks.json || exit_code=`echo $?` || true
+          pylint-json2html -o ./reoprts/pylint_checks.html ./reoprts/pylint_checks.json
           deactivate
           exit ${exit_code}
 
-      - name: Upload artifacts
+      - name: Analysing the vendor service code with pylint
+        run: |
+          cd backend/services/vendor
+          source .venv/bin/activate
+          mkdir -p reoprts
+          pylint * > ./reoprts/pylint_checks.json || exit_code=`echo $?` || true
+          pylint-json2html -o ./reoprts/pylint_checks.html ./reoprts/pylint_checks.json
+          deactivate
+          exit ${exit_code}
+
+      - name: Upload admin_panel artifacts
         if: failure()
         uses: actions/upload-artifact@v2
         with:
           name: pylint_report
-          path: backend/services/admin_panel/pylint_report
+          path: backend/services/admin_panel/reoprts
+
+      - name: Upload vendor artifacts
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: pylint_report
+          path: backend/services/vendor/reoprts
