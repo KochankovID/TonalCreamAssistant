@@ -1,0 +1,37 @@
+name: flutter_lints
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  flutter_lints:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Repository
+        uses: actions/checkout@v2
+      
+      - name: Set up Dart
+        uses: dart-lang/setup-dart@v1
+
+      - name: Install Pub Dependencies
+        run: |
+          cd frontend/src
+          dart pub get
+
+      - name: Verify Formatting
+        run: |
+          cd frontend/src
+          dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze Project Source
+        run: |
+          cd frontend/src
+          dart analyze
+      
+      - name: Run tests
+        run: |
+          cd frontend/src
+          dart test
