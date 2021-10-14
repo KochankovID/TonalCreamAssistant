@@ -19,7 +19,7 @@ jobs:
       - name: Install Pub Dependencies
         run: |
           cd frontend/src
-          dart pub get
+          flutter pub get
 
       - name: Verify Formatting
         run: |
