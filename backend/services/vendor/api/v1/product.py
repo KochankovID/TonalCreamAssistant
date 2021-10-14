@@ -1,7 +1,7 @@
 import uuid
 from typing import List, Optional
 
-from fastapi import Depends, HTTPException, Query
+from fastapi import Depends, HTTPException
 from fastapi_utils.cbv import cbv
 from fastapi_utils.inferring_router import InferringRouter
 from pydantic.color import Color
@@ -10,7 +10,7 @@ from sqlalchemy.orm import joinedload
 from sqlmodel import select
 
 from db import get_db
-from models import Product, ProductRead, ProductWithVendor, Vendor
+from models import Product, ProductRead, ProductWithVendor
 
 router = InferringRouter()
 
