@@ -43,9 +43,9 @@ jobs:
         run: |
           cd backend/services/admin_panel
           source .venv/bin/activate
-          mkdir -p reoprts
-          pylint * > ./reoprts/pylint_checks.json || exit_code=`echo $?` || true
-          pylint-json2html -o ./reoprts/pylint_checks.html ./reoprts/pylint_checks.json
+          mkdir -p reports
+          pylint * > ./reports/admin_panel_pylint_checks.json || exit_code=`echo $?` || true
+          pylint-json2html -o ./reports/admin_panel_pylint_checks.html ./reports/admin_panel_pylint_checks.json
           deactivate
           exit ${exit_code}
 
@@ -53,9 +53,9 @@ jobs:
         run: |
           cd backend/services/vendor
           source .venv/bin/activate
-          mkdir -p reoprts
-          pylint * > ./reoprts/pylint_checks.json || exit_code=`echo $?` || true
-          pylint-json2html -o ./reoprts/pylint_checks.html ./reoprts/pylint_checks.json
+          mkdir -p reports
+          pylint * > ./reports/vendor_pylint_checks.json || exit_code=`echo $?` || true
+          pylint-json2html -o ./reports/vendor_pylint_checks.html ./reports/vendor_pylint_checks.json
           deactivate
           exit ${exit_code}
 
@@ -64,11 +64,11 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: pylint_report
-          path: backend/services/admin_panel/reoprts
+          path: backend/services/admin_panel/reports
 
       - name: Upload vendor artifacts
         if: failure()
         uses: actions/upload-artifact@v2
         with:
           name: pylint_report
-          path: backend/services/vendor/reoprts
+          path: backend/services/vendor/reports
