@@ -13,6 +13,7 @@ Install Docker and Docker compose
 1. Create .env file in docker-compose directory (or rename .env.example)
 
 2. Fill .env file with the following variables:
+
    - `DB_NAME` = name of the database
    - `DB_USER` = name of db user
    - `DB_PASSWORD` = db password
@@ -26,6 +27,7 @@ Install Docker and Docker compose
    - `VENDOR_DB_AUTH_SCHEMA` = schema of vendor_db for vendor api service
    - `VENDOR_PORT` = exposed port for the vendor service (delete for
      production)
+
 3. Run `docker compose up` in the backend repository folder
 
 4. To create superuser for admin_panel run in the admin_panel folder
