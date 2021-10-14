@@ -57,3 +57,4 @@ profile = "black"
 max-line-length = 120
 format = "html"
 htmldir = "flake-report"
+exclude = ".venv"
