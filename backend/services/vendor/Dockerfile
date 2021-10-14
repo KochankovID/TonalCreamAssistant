@@ -2,7 +2,7 @@ FROM python:3.9
 
 RUN pip install poetry==1.1.11
 
-WORKDIR vendor
+WORKDIR /vendor
 COPY ./poetry.lock ./pyproject.toml /vendor/
 
 RUN poetry config virtualenvs.create false
