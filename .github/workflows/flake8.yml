@@ -1,4 +1,4 @@
-name: Pylint
+name: Flake8
 
 on:
   pull_request:
@@ -41,24 +41,22 @@ jobs:
       #----------------------------------------------
       # analise code
       #----------------------------------------------
-      - name: Analysing the admin_panel service code with pylint
+      - name: Analysing the admin_panel service code with flake8
         run: |
           cd backend/services/admin_panel
           source .venv/bin/activate
-          mkdir -p pylint_reports
-          pylint * > ./pylint_reports/admin_panel_pylint_checks.json || exit_code=`echo $?` || true
-          pylint-json2html -o ./pylint_reports/admin_panel_pylint_checks.html ./pylint_reports/admin_panel_pylint_checks.json
+          pflake8 .
           deactivate
           exit ${exit_code}
       #----------------------------------------------
       # create artifacts
       #----------------------------------------------
-      - name: Upload admin_panel artifacts
+      - name: Upload vendor artifacts
         if: failure()
         uses: actions/upload-artifact@v2
         with:
-          name: admin_panel_pylint_report
-          path: backend/services/admin_panel/pylint_reports
+          name: admin_panel_flake8_report
+          path: backend/services/admin_panel/flake-report
 
   vendor:
     runs-on: ubuntu-latest
@@ -92,13 +90,11 @@ jobs:
       #----------------------------------------------
       # analise code
       #----------------------------------------------
-      - name: Analysing the vendor service code with pylint
+      - name: Analysing the vendor service code with flake8
         run: |
           cd backend/services/vendor
           source .venv/bin/activate
-          mkdir -p pylint_reports
-          pylint * > ./pylint_reports/vendor_pylint_checks.json || exit_code=`echo $?` || true
-          pylint-json2html -o ./pylint_reports/vendor_pylint_checks.html ./pylint_reports/vendor_pylint_checks.json
+          pflake8 .
           deactivate
           exit ${exit_code}
       #----------------------------------------------
@@ -108,5 +104,5 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v2
         with:
-          name: vendor_pylint_report
-          path: backend/services/vendor/pylint_reports
+          name: vendor_flake8_report
+          path: backend/services/vendor/flake-report
