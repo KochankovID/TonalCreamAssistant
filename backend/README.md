@@ -2,7 +2,7 @@
 
 ---
 
-### Preparations
+## Preparations
 
 Install Docker and Docker compose
 
