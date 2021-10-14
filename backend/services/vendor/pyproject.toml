@@ -22,6 +22,7 @@ fastapi-health = "^0.4.0"
 pylint = "^2.11.1"
 pylint-json2html = "^0.3.0"
 isort = "^5.9.3"
+black = "^21.9b0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

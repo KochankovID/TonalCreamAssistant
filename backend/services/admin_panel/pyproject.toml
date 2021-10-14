@@ -24,6 +24,7 @@ yapf = "^0.31.0"
 isort = "^5.9.3"
 pylint = "^2.11.1"
 pylint-django = "^2.4.4"
+black = "^21.9b0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

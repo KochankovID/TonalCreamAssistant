@@ -1,4 +1,4 @@
-name: Isort
+name: Black
 
 on:
   pull_request:
@@ -41,11 +41,11 @@ jobs:
       #----------------------------------------------
       # analise code
       #----------------------------------------------
-      - name: Analysing the admin_panel service code with isort
+      - name: Analysing the admin_panel service code with black
         run: |
           cd backend/services/admin_panel
           source .venv/bin/activate
-          isort .
+          black .
           deactivate
           exit ${exit_code}
 
@@ -81,10 +81,10 @@ jobs:
       #----------------------------------------------
       # analise code
       #----------------------------------------------
-      - name: Analysing the vendor service code with isort
+      - name: Analysing the vendor service code with black
         run: |
           cd backend/services/vendor
           source .venv/bin/activate
-          isort .
+          black .
           deactivate
           exit ${exit_code}

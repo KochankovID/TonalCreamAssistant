@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env.read_env(str(BASE_DIR.parent.joinpath(".env")))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-_CHARS = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
+_CHARS = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)"
 SECRET_KEY = env.str("ADMIN_PANEL_SECRET_KEY", get_random_string(50, _CHARS))
 
 # SECURITY WARNING: don't run with debug turned on in production!
