@@ -36,7 +36,7 @@ jobs:
         run: |
           cd backend/services/admin_panel
           poetry install --no-interaction --no-root
-          cd backend/services/vendor
+          cd ../vendor
           poetry install --no-interaction --no-root
 
       - name: Analysing the admin_panel service code with pylint
