@@ -2,15 +2,18 @@ from pathlib import Path
 
 from environs import Env
 
+from django.utils.crypto import get_random_string
+
 env = Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env.read_env(str(BASE_DIR.parent.joinpath(".env")))
+# env.read_env(str(BASE_DIR.parent.joinpath(".env")))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str("ADMIN_PANEL_SECRET_KEY")
+_CHARS = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
+SECRET_KEY = env.str("ADMIN_PANEL_SECRET_KEY", get_random_string(50, _CHARS))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("ADMIN_PANEL_DEBUG", default=True)
@@ -65,7 +68,7 @@ WSGI_APPLICATION = "admin_panel.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {"default": env.dj_db_url("ADMIN_PANEL_DB_URL")}
+DATABASES = {"default": env.dj_db_url("ADMIN_PANEL_DB_URL", "sqlite:///db.sqlite")}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
