@@ -38,6 +38,7 @@ jobs:
           poetry install --no-interaction --no-root
 
   pylint:
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       - name: Analysing the admin_panel service code with pylint
