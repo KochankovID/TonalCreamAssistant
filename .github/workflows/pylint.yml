@@ -52,4 +52,4 @@ jobs:
         run: |
           cd backend/services/admin_panel
           source .venv/bin/activate
-          pylint_runner
+          pylint *
