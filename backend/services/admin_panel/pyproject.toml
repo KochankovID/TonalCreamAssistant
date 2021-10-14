@@ -47,3 +47,6 @@ disable = [
     "import-outside-toplevel",
     "invalid-name",
 ]
+
+[tool.isort]
+profile = "black"

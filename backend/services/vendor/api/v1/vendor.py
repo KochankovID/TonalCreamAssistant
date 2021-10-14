@@ -9,7 +9,7 @@ from sqlalchemy.orm import joinedload
 from sqlmodel import select
 
 from db import get_db
-from models import VendorRead, Vendor, VendorWithProducts
+from models import Vendor, VendorRead, VendorWithProducts
 
 router = InferringRouter()
 

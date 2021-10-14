@@ -1,8 +1,7 @@
 from pathlib import Path
 
-from environs import Env
-
 from django.utils.crypto import get_random_string
+from environs import Env
 
 env = Env()
 

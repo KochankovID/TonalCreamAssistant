@@ -5,8 +5,7 @@ from typing import List, Optional
 import sqlalchemy as sa
 from pydantic.color import Color
 from sqlalchemy_utils import ChoiceType
-from sqlmodel import Field, Relationship
-from sqlmodel import SQLModel
+from sqlmodel import Field, Relationship, SQLModel
 
 from core import settings
 
