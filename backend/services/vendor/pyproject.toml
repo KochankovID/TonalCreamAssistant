@@ -33,7 +33,7 @@ based_on_style = "pep8"
 ignore=".venv, Dockerfile, poetry.lock, pyproject.toml"
 
 [tool.pylint.'REPORTS']
-#output-format="json"
+output-format="json"
 
 [tool.pylint.messages_control]
 max-line-length = 120

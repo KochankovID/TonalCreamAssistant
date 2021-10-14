@@ -9,7 +9,7 @@ env = Env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# env.read_env(str(BASE_DIR.parent.joinpath(".env")))
+env.read_env(str(BASE_DIR.parent.joinpath(".env")))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 _CHARS = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
