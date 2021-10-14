@@ -1,4 +1,4 @@
-name: Linters
+name: Pylint
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
     branches:
       - main
 jobs:
-  pylint:
+  admin_pannel:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,7 +30,7 @@ jobs:
           virtualenvs-in-project: true
           installer-parallel: true
       #----------------------------------------------
-      # install dependencies if cache does not exist
+      # install dependencies
       #----------------------------------------------
       - name: Install dependencies
         run: |
@@ -38,7 +38,9 @@ jobs:
           poetry install --no-interaction --no-root
           cd ../vendor
           poetry install --no-interaction --no-root
-
+      #----------------------------------------------
+      # analise code
+      #----------------------------------------------
       - name: Analysing the admin_panel service code with pylint
         run: |
           cd backend/services/admin_panel
@@ -48,7 +50,48 @@ jobs:
           pylint-json2html -o ./reports/admin_panel_pylint_checks.html ./reports/admin_panel_pylint_checks.json
           deactivate
           exit ${exit_code}
+      #----------------------------------------------
+      # create artifacts
+      #----------------------------------------------
+      - name: Upload admin_panel artifacts
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: pylint_report
+          path: backend/services/admin_panel/reports
 
+  vendor:
+    runs-on: ubuntu-latest
+    steps:
+      #----------------------------------------------
+      #       check-out repo and set-up python
+      #----------------------------------------------
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      #----------------------------------------------
+      #  -----  install & configure poetry  -----
+      #----------------------------------------------
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+      #----------------------------------------------
+      # install dependencies
+      #----------------------------------------------
+      - name: Install dependencies
+        run: |
+          cd backend/services/vendor
+          poetry install --no-interaction --no-root
+          cd ../vendor
+          poetry install --no-interaction --no-root
+      #----------------------------------------------
+      # analise code
+      #----------------------------------------------
       - name: Analysing the vendor service code with pylint
         run: |
           cd backend/services/vendor
@@ -58,14 +101,9 @@ jobs:
           pylint-json2html -o ./reports/vendor_pylint_checks.html ./reports/vendor_pylint_checks.json
           deactivate
           exit ${exit_code}
-
-      - name: Upload admin_panel artifacts
-        if: failure()
-        uses: actions/upload-artifact@v2
-        with:
-          name: pylint_report
-          path: backend/services/admin_panel/reports
-
+      #----------------------------------------------
+      # create artifacts
+      #----------------------------------------------
       - name: Upload vendor artifacts
         if: failure()
         uses: actions/upload-artifact@v2
