@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main]
+    branches: [main, nastya_frontend]
 
 jobs:
   flutter_lints:
