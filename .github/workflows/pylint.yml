@@ -8,7 +8,7 @@ on:
     branches:
       - main
 jobs:
-  build:
+  pylint:
 
     runs-on: ubuntu-latest
 
@@ -52,4 +52,15 @@ jobs:
         run: |
           cd backend/services/admin_panel
           source .venv/bin/activate
-          pylint *
+          mkdir -p pylint_report
+          pylint * > ./pylint_report/pylint_checks.json || exit_code=`echo $?` || true
+          pylint-json2html -o ./pylint_report/pylint_checks.html ./pylint_report/pylint_checks.json
+          deactivate
+          exit ${exit_code}
+
+      - name: Upload artifacts
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: pylint_report
+          path: backend/services/admin_panel/pylint_report
