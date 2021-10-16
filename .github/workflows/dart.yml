@@ -32,8 +32,3 @@ jobs:
         run: |
           cd frontend/src
           dart analyze
-      
-      - name: Run tests
-        run: |
-          cd frontend/src
-          dart test
