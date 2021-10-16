@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Tonal creme assistant',
+      title: 'Tonal cream assistant',
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.tealAccent[700],
         appBar: AppBar(
-          title: Text("Tonal Creme Assistant"),
+          title: Text("Tonal Cream Assistant"),
         ),
         body: Center(
           child:
@@ -141,7 +141,10 @@ class ImagePageState extends State<ImagePage> {
   var type;
 
   ImagePageState(this.type);
-
+  void loadResultsPage(BuildContext context) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => ResultsPage()));
+  }
   @override
   void initState() {
     super.initState();
@@ -216,9 +219,44 @@ class ImagePageState extends State<ImagePage> {
             ),
             onPressed: () {
               print("Pressed");
+              //Send to server
+              loadResultsPage(context);
             },
           ),],
       ),
+    );
+  }
+}
+
+class ResultsPage extends StatefulWidget {
+  ResultsPage();
+
+  @override
+  ResultsPageState createState() => ResultsPageState();
+}
+
+class ResultsPageState extends State<ResultsPage> {
+
+  //Go to another page
+  // void loadResultsPage(BuildContext context) {
+  //   Navigator.push(context,
+  //       MaterialPageRoute(builder: (context) => ResultsPage()));
+  // }
+
+  ResultsPageState();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.tealAccent[700],
+      appBar: AppBar(
+          title: Text("Recommendations.")),
+
     );
   }
 }
