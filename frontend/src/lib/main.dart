@@ -3,7 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:http/http.dart' as http;
 import 'dart:io';
+
+const String SERVER = "http://localhost:3000/image/";
 
 void main() {
   runApp(const MyApp());
@@ -140,7 +144,7 @@ class HomePage extends StatelessWidget {
 
 class ImagePage extends StatefulWidget {
   final type;
-  ImagePage(this.type);
+  const ImagePage(this.type, {Key? key}) : super(key: key);
 
   @override
   ImagePageState createState() => ImagePageState(type);
@@ -189,7 +193,7 @@ class ImagePageState extends State<ImagePage> {
                       imageQuality: 50,
                       preferredCameraDevice: CameraDevice.front);
                   setState(() {
-                    _image = File(image.path);
+                    _image = image;
                   });
                 } else {
                   //If we use web
@@ -213,7 +217,7 @@ class ImagePageState extends State<ImagePage> {
                           )
                         : Image.file(
                             //If we use Android
-                            _image,
+                            File(_image.path),
                             fit: BoxFit.fitHeight,
                           )
                     : Container(
@@ -235,9 +239,32 @@ class ImagePageState extends State<ImagePage> {
               style:
                   TextStyle(color: Colors.brown, fontWeight: FontWeight.bold),
             ),
-            onPressed: () {
+            onPressed: () async {
               //print("Pressed");
               //Send to server
+              final url = Uri.parse("$SERVER");
+
+              var request = new http.MultipartRequest("POST", url);
+              request.fields['user'] = 'blah';
+              if (kIsWeb == false) {
+                //If we use Android
+                request.files.add(await http.MultipartFile.fromPath(
+                    'file', _image.path,
+                    contentType: new MediaType('image', 'jpg')));
+              } else {
+                request.files.add(new http.MultipartFile.fromBytes(
+                    'file', _image,
+                    contentType: new MediaType('image', 'jpg')));
+              }
+              request.send().then((response) {
+                if (response.statusCode == 200) print("Uploaded!");
+                else print("no");
+              });
+              //var response = await http.post(url, body: {'name':'test','num':'10'});
+             // print("Response status: ${response.statusCode}");
+             // print("Response body: ${response.body}");
+
+
               loadResultsPage(context);
             },
           ),
