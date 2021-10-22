@@ -1,8 +1,9 @@
 FROM python:3.9
 
 RUN apt-get update
-RUN apt-get install --no-install-recommends ffmpeg libsm6 libxext6  -y
+RUN apt-get install --no-install-recommends ffmpeg=7:4.3.2-0+deb11u2 libsm6=2:1.2.3-1 libxext6=2:1.3.3-1.1  -y
 RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
 
 RUN pip install poetry==1.1.11
 
