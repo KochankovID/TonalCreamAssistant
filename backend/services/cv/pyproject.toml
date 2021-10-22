@@ -5,12 +5,17 @@ description = ""
 authors = ["ilyakochankov <ilyakochankov@yandex.ru>"]
 
 [tool.poetry.dependencies]
-python = "3.9"
+python = "3.9.7"
 opencv-python = "^4.5.3"
 matplotlib = "^3.4.3"
-colorthief = "^0.2.1"
 scikit-learn = "^1.0"
 numpy = "^1.21.2"
+Flask = "^2.0.2"
+flask-apispec = "^0.11.0"
+marshmallow = "^3.14.0"
+gunicorn = "^20.1.0"
+py-healthcheck = "^1.10.1"
+environs = "^9.3.4"
 
 [tool.poetry.dev-dependencies]
 
