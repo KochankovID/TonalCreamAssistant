@@ -1,13 +1,13 @@
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
-
 from sklearn.cluster import KMeans
 
 
 class CVFaceDetection:
     def __init__(self):
         self.face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+
 
 def palette(clusters):
     width = 300

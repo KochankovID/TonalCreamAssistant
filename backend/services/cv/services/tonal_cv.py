@@ -7,7 +7,9 @@ from sklearn.cluster import KMeans
 
 class CVFaceProcessor:
     def __init__(self):
-        self.face_cascade = cv2.CascadeClassifier("services/haarcascade/haarcascade_frontalface_default.xml")
+        self.face_cascade = cv2.CascadeClassifier(
+            "services/haarcascade/haarcascade_frontalface_default.xml"
+        )
         self.k_means = KMeans(n_clusters=1)
 
     def face_detection(self, image: np.ndarray) -> List[tuple]:
@@ -15,14 +17,16 @@ class CVFaceProcessor:
         return self.face_cascade.detectMultiScale(gray, 1.1, 4)
 
     @staticmethod
-    def crop_face(image: np.ndarray, face: tuple, crop_coef_x: float = 0, crop_coef_y: float = 0) -> np.ndarray:
+    def crop_face(
+        image: np.ndarray, face: tuple, crop_coef_x: float = 0, crop_coef_y: float = 0
+    ) -> np.ndarray:
         x_cropped = int((face[2] - face[0]) * crop_coef_x)
         y_cropped = int((face[1] - face[3]) * crop_coef_y)
         return image[
-               face[1] + x_cropped: face[1] + face[3] - x_cropped,
-               face[0] + y_cropped: face[0] + face[2] - y_cropped,
-               :
-               ]
+            face[1] + x_cropped : face[1] + face[3] - x_cropped,
+            face[0] + y_cropped : face[0] + face[2] - y_cropped,
+            :,
+        ]
 
     def get_tone_rgb(self, image: np.ndarray) -> tuple[int]:
         self.k_means.fit(image.reshape(image.shape[0] * image.shape[1], 3))

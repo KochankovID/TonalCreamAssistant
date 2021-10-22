@@ -42,7 +42,7 @@ app.config.from_object(settings)
 health = HealthCheck()
 
 
-@app.route('/health')
+@app.route("/health")
 @doc(
     description="Check service health",
 )
