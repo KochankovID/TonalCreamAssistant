@@ -54,7 +54,8 @@ disable = [
 profile = "black"
 
 [tool.flake8]
+ignore = ["E203", "W503"]
 max-line-length = 120
 format = "html"
 htmldir = "flake-report"
-exclude = ".venv"
+exclude = [".venv", "api/v1/cv/__init__.py"]

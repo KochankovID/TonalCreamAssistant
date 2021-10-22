@@ -1,8 +1,5 @@
-import http
-
 import cv2
 import numpy as np
-from flask import make_response
 from flask_apispec import doc, marshal_with, use_kwargs
 from werkzeug.datastructures import FileStorage
 
