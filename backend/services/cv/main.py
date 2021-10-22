@@ -6,7 +6,7 @@ from flask import Flask, jsonify
 from flask_apispec import FlaskApiSpec, doc
 from healthcheck import HealthCheck
 
-import core.settings as settings
+from core import settings
 from api.v1.cv import bp as cv_bp
 from api.v1.cv.tonal import cv_skin_tone
 

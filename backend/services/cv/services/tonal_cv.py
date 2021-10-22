@@ -30,11 +30,11 @@ class CVFaceProcessor:
 
     def get_tone_rgb(self, image: np.ndarray) -> tuple[int]:
         self.k_means.fit(image.reshape(image.shape[0] * image.shape[1], 3))
-        return tuple(map(lambda x: int(x), self.k_means.cluster_centers_[0]))
+        return tuple(map(int, self.k_means.cluster_centers_[0]))
 
     @staticmethod
     def rgb_to_hex(color: tuple) -> str:
-        return "#{2:02x}{1:02x}{0:02x}".format(*color)
+        return f"#{color[2]:02x}{color[1]:02x}{color[0]:02x}"
 
 
 class CVToneExtractor:

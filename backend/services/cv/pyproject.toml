@@ -34,7 +34,7 @@ build-backend = "poetry.core.masonry.api"
 based_on_style = "pep8"
 
 [tool.pylint.'MASTER']
-ignore=".venv, Dockerfile, poetry.lock, pyproject.toml"
+ignore=".venv, Dockerfile, poetry.lock, pyproject.toml, __init__.py, test_cv.py"
 
 [tool.pylint.'REPORTS']
 output-format="json"
