@@ -132,7 +132,7 @@ jobs:
       #----------------------------------------------
       - name: Install dependencies
         run: |
-          cd backend/services/vendor
+          cd backend/services/cv
           poetry install --no-interaction --no-root
       #----------------------------------------------
       # analise code
