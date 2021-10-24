@@ -15,7 +15,7 @@ def findFaceMask(img):
 	face_points = []
 	right_eye_points = []
 	left_eye_points = []
-	
+
 	ih, iw, ic = img.shape
 
 	mpDraw = mp.solutions.drawing_utils
@@ -25,13 +25,13 @@ def findFaceMask(img):
 		max_num_faces=1)
 
 	drawSpec = mpDraw.DrawingSpec(thickness=1, circle_radius=2)
-	
+
 	imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 	results = faceMesh.process(imgRGB)
 	if results.multi_face_landmarks:
 		for faceLms in results.multi_face_landmarks:
 			mpDraw.draw_landmarks(img, faceLms, mpFaceMesh.FACEMESH_CONTOURS, drawSpec, drawSpec)
-			
+
 			for id, lm in enumerate(faceLms.landmark):
 				x, y = int(lm.x*iw), int(lm.y*ih)
 				if id in lips_landmarks:
@@ -45,9 +45,9 @@ def findFaceMask(img):
 
 	elem_mask = np.uint8(np.zeros((ih, iw, 1)))
 	face_mask = np.uint8(np.zeros((ih, iw, 1)))
-	
+
 	#lips
-	start, first, second = None, None, None	
+	start, first, second = None, None, None
 	for id in range(0, len(lips_landmarks) + 1):
 		if id == len(lips_landmarks):
 			cv2.line(elem_mask, first, start, (255, 255, 255), 1)
@@ -55,14 +55,14 @@ def findFaceMask(img):
 		for i in lips_points:
 			if lips_landmarks[id] == i[0] and first == None:
 				start = first = (i[1], i[2])
-			elif lips_landmarks[id] == i[0] and first != None:
+			elif lips_landmarks[id] == i[0]:
 				second = (i[1], i[2])
-				
+
 				cv2.line(elem_mask, first, second, (255, 255, 255), 1)
 				first = second
 
 	#face
-	start, first, second = None, None, None	
+	start, first, second = None, None, None
 	for id in range(0, len(face_landmarks) + 1):
 		if id == len(face_landmarks):
 			cv2.line(face_mask, first, start, (255, 255, 255), 1)
@@ -70,14 +70,14 @@ def findFaceMask(img):
 		for i in face_points:
 			if face_landmarks[id] == i[0] and first == None:
 				start = first = (i[1], i[2])
-			elif face_landmarks[id] == i[0] and first != None:
+			elif face_landmarks[id] == i[0]:
 				second = (i[1], i[2])
-				
+
 				cv2.line(face_mask, first, second, (255, 255, 255), 1)
 				first = second	
-				
+
 	#right eye
-	start, first, second = None, None, None	
+	start, first, second = None, None, None
 	for id in range(0, len(right_eye_landmarks) + 1):
 		if id == len(right_eye_landmarks):
 			cv2.line(elem_mask, first, start, (255, 255, 255), 1)
@@ -85,14 +85,14 @@ def findFaceMask(img):
 		for i in right_eye_points:
 			if right_eye_landmarks[id] == i[0] and first == None:
 				start = first = (i[1], i[2])
-			elif right_eye_landmarks[id] == i[0] and first != None:
+			elif right_eye_landmarks[id] == i[0]:
 				second = (i[1], i[2])
-				
+
 				cv2.line(elem_mask, first, second, (255, 255, 255), 1)
 				first = second	
 
 	#left eye
-	start, first, second = None, None, None	
+	start, first, second = None, None, None
 	for id in range(0, len(left_eye_landmarks) + 1):
 		if id == len(left_eye_landmarks):
 			cv2.line(elem_mask, first, start, (255, 255, 255), 1)
@@ -100,9 +100,9 @@ def findFaceMask(img):
 		for i in left_eye_points:
 			if left_eye_landmarks[id] == i[0] and first == None:
 				start = first = (i[1], i[2])
-			elif left_eye_landmarks[id] == i[0] and first != None:
+			elif left_eye_landmarks[id] == i[0]:
 				second = (i[1], i[2])
-				
+
 				cv2.line(elem_mask, first, second, (255, 255, 255), 1)
 				first = second	
 
@@ -121,7 +121,7 @@ def findFaceMask(img):
 		for x in range(iw):
 			if elem_mask[y][x] == (100):
 				face_mask[y][x] = (0)
-	
+
 	return face_mask
 
 def findElements(img):
