@@ -1,7 +1,8 @@
-import cv2
-import numpy as np
-import mediapipe as mp
 from argparse import ArgumentParser
+
+import cv2
+import mediapipe as mp
+import numpy as np
 
 
 def findFaceMask(img):
