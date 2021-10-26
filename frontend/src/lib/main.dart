@@ -7,7 +7,8 @@ import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
-const String SERVER = "http://localhost:3000/image/";
+//const String SERVER = "http://localhost:3000/image/";
+const String SERVER = "http://127.0.0.1/api/cv/v1/skin_tone";
 
 void main() {
   runApp(const MyApp());
@@ -245,18 +246,18 @@ class ImagePageState extends State<ImagePage> {
               final url = Uri.parse("$SERVER");
 
               var request = new http.MultipartRequest("POST", url);
-              request.fields['user'] = 'blah';
               if (kIsWeb == false) {
                 //If we use Android
                 request.files.add(await http.MultipartFile.fromPath(
-                    'file', _image.path,
+                    'image', _image.path,
                     contentType: new MediaType('image', 'jpg')));
               } else {
                 request.files.add(new http.MultipartFile.fromBytes(
-                    'file', _image,
+                    'image', _image,
                     contentType: new MediaType('image', 'jpg')));
               }
               request.send().then((response) {
+                print(response.statusCode);
                 if (response.statusCode == 200) print("Uploaded!");
                 else print("no");
               });
