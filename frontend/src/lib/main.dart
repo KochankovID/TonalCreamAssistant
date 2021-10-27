@@ -3,12 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 
 //const String SERVER = "http://localhost:3000/image/";
 const String SERVER = "http://127.0.0.1/api/cv/v1/skin_tone";
+//const String SERVER = "http://192.168.0.103/api/cv/v1/skin_tone";
 
 void main() {
   runApp(const MyApp());
@@ -153,13 +153,14 @@ class ImagePage extends StatefulWidget {
 
 class ImagePageState extends State<ImagePage> {
   var _image;
+  var _image_name;
   var imagePicker;
   var type;
 
   ImagePageState(this.type);
-  void loadResultsPage(BuildContext context) {
+  void loadResultsPage(BuildContext context, var response_from_server) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const ResultsPage()));
+        context, MaterialPageRoute(builder: (context) => ResultsPage(response_from_server)));
   }
 
   @override
@@ -195,12 +196,14 @@ class ImagePageState extends State<ImagePage> {
                       preferredCameraDevice: CameraDevice.front);
                   setState(() {
                     _image = image;
+                    _image_name = _image.path.split("/").last;
                   });
                 } else {
                   //If we use web
                   var pickedFile = await FilePicker.platform.pickFiles();
                   setState(() {
                     var logoBase64 = pickedFile!.files.first.bytes;
+                    _image_name = pickedFile.files.first.name;
                     _image = logoBase64!;
                   });
                 }
@@ -241,32 +244,35 @@ class ImagePageState extends State<ImagePage> {
                   TextStyle(color: Colors.brown, fontWeight: FontWeight.bold),
             ),
             onPressed: () async {
-              //print("Pressed");
               //Send to server
               final url = Uri.parse("$SERVER");
 
               var request = new http.MultipartRequest("POST", url);
+              request.headers["Content-Type"]='multipart/form-data';
               if (kIsWeb == false) {
                 //If we use Android
                 request.files.add(await http.MultipartFile.fromPath(
-                    'image', _image.path,
-                    contentType: new MediaType('image', 'jpg')));
+                    'image', _image.path, filename: _image_name));
               } else {
                 request.files.add(new http.MultipartFile.fromBytes(
                     'image', _image,
-                    contentType: new MediaType('image', 'jpg')));
+                    filename: _image_name));
               }
               request.send().then((response) {
-                print(response.statusCode);
-                if (response.statusCode == 200) print("Uploaded!");
-                else print("no");
+               // print(response.statusCode);
+                if (response.statusCode == 200) {
+                  print("Uploaded!");
+                  http.Response.fromStream(response).then((response1) {
+                    loadResultsPage(context, response1.body);
+                   print('Response: '+response1.body);
+                  });
+                }
+                else {
+                  var response_from_server = 'Error. StatusCode: '+response.statusCode.toString();
+                  print('Error. StatusCode: '+response.statusCode.toString());
+                  loadResultsPage(context, response_from_server);
+                }
               });
-              //var response = await http.post(url, body: {'name':'test','num':'10'});
-             // print("Response status: ${response.statusCode}");
-             // print("Response body: ${response.body}");
-
-
-              loadResultsPage(context);
             },
           ),
         ],
@@ -276,10 +282,11 @@ class ImagePageState extends State<ImagePage> {
 }
 
 class ResultsPage extends StatefulWidget {
-  const ResultsPage({Key? key}) : super(key: key);
+  final response_from_server;
+  const ResultsPage(this.response_from_server, {Key? key}) : super(key: key);
 
   @override
-  ResultsPageState createState() => ResultsPageState();
+  ResultsPageState createState() => ResultsPageState(response_from_server);
 }
 
 class ResultsPageState extends State<ResultsPage> {
@@ -288,8 +295,8 @@ class ResultsPageState extends State<ResultsPage> {
   //   Navigator.push(context,
   //       MaterialPageRoute(builder: (context) => ResultsPage()));
   // }
-
-  ResultsPageState();
+  var response_from_server;
+  ResultsPageState(this.response_from_server);
 
   @override
   void initState() {
@@ -301,6 +308,22 @@ class ResultsPageState extends State<ResultsPage> {
     return Scaffold(
       backgroundColor: Colors.tealAccent[700],
       appBar: AppBar(title: const Text("Recommendations.")),
+      body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+            Expanded(
+              child: Text(
+                this.response_from_server,
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ]),
+       ),
     );
   }
 }
